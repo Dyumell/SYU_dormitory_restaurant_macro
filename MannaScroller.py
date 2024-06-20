@@ -15,30 +15,10 @@ import pyautogui
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(112, 193)
+        Form.resize(169, 98)
         Form.setStyleSheet("background-color: rgb(211, 205, 201);")
-        self.frame_2 = QtWidgets.QFrame(Form)
-        self.frame_2.setGeometry(QtCore.QRect(0, 0, 111, 191))
-        self.frame_2.setStyleSheet("background-color: rgb(178, 172, 168);\n"
-"border-radius: 20px;")
-        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_2.setObjectName("frame_2")
-        self.label_4 = QtWidgets.QLabel(self.frame_2)
-        self.label_4.setGeometry(QtCore.QRect(20, 160, 66, 25))
-        self.label_4.setStyleSheet("font: 13pt \"휴먼엑스포\";\n"
-"background-color: transparent;\n"
-"color: rgb(82, 140, 91);")
-        self.label_4.setObjectName("label_4")
-        self.frame_3 = QtWidgets.QFrame(self.frame_2)
-        self.frame_3.setGeometry(QtCore.QRect(10, 0, 91, 151))
-        self.frame_3.setStyleSheet("background-color: rgb(133, 125, 117);\n"
-"border-radius: 15px;")
-        self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_3.setObjectName("frame_3")
-        self.pushButton = QtWidgets.QPushButton(self.frame_3)
-        self.pushButton.setGeometry(QtCore.QRect(10, 30, 71, 51))
+        self.pushButton = QtWidgets.QPushButton(Form)
+        self.pushButton.setGeometry(QtCore.QRect(10, 10, 71, 51))
         font = QtGui.QFont()
         font.setFamily("휴먼엑스포")
         font.setPointSize(12)
@@ -53,30 +33,30 @@ class Ui_Form(object):
 "border: 3px solid #EBE5E1;")
         self.pushButton.setAutoRepeatDelay(150)
         self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.frame_3)
-        self.pushButton_2.setGeometry(QtCore.QRect(10, 90, 71, 51))
+        self.pushButton_2 = QtWidgets.QPushButton(Form)
+        self.pushButton_2.setGeometry(QtCore.QRect(90, 10, 71, 51))
         self.pushButton_2.setStyleSheet("border-radius : 22px;\n"
 "background-color: rgb(77, 70, 63);\n"
 "font: 12pt \"휴먼엑스포\";\n"
 "color: rgb(235, 229, 225);\n"
 "border: 3px solid #EBE5E1;")
         self.pushButton_2.setObjectName("pushButton_2")
+        self.label_4 = QtWidgets.QLabel(Form)
+        self.label_4.setGeometry(QtCore.QRect(50, 70, 66, 25))
+        self.label_4.setStyleSheet("font: 13pt \"휴먼엑스포\";\n"
+"background-color: transparent;\n"
+"color: rgb(82, 140, 91);")
+        self.label_4.setObjectName("label_4")
         self.frame = QtWidgets.QFrame(Form)
-        self.frame.setGeometry(QtCore.QRect(0, 0, 111, 20))
-        self.frame.setStyleSheet("background-color: rgb(35, 31, 32);\n"
-"border-top-right-radius: 20px;\n"
-"border-top-left-radius: 20px;\n"
-"")
+        self.frame.setGeometry(QtCore.QRect(0, 0, 171, 101))
+        self.frame.setStyleSheet("border-radius : 22px;")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
-        self.label = QtWidgets.QLabel(self.frame)
-        self.label.setGeometry(QtCore.QRect(30, 30, 351, 41))
-        self.label.setStyleSheet("font: 17pt \"휴먼엑스포\";\n"
-"color: rgb(235, 229, 225);\n"
-"text-shadow: 22px 22px 22px rgba(0, 0, 0, 225);")
-        self.label.setText("")
-        self.label.setObjectName("label")
+        self.frame.raise_()
+        self.pushButton.raise_()
+        self.pushButton_2.raise_()
+        self.label_4.raise_()
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -84,10 +64,9 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.label_4.setText(_translate("Form", "중단됨"))
         self.pushButton.setText(_translate("Form", "갱신"))
         self.pushButton_2.setText(_translate("Form", "중단"))
-
+        self.label_4.setText(_translate("Form", "중단됨"))
 
 
 class MyApp(QtWidgets.QWidget, Ui_Form):
@@ -95,7 +74,7 @@ class MyApp(QtWidgets.QWidget, Ui_Form):
         super().__init__()
         self.setupUi(self)
         self.move(50, 50)
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
         self.pushButton.clicked.connect(self.simulate_click)
         self.pushButton.clicked.connect(self.start_update)
@@ -104,18 +83,18 @@ class MyApp(QtWidgets.QWidget, Ui_Form):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.simulate_scroll)
-
+        
+        self.dragPosition = None  # dragPosition 초기화
 
     def simulate_click(self):
         x = 1003  # 적절한 x 좌표로 수정
         y = 150  # 적절한 y 좌표로 수정
-        pyautogui.click(x,y)
+        pyautogui.click(x, y)
 
     def start_update(self):
         self.label_4.setText("갱신중")
         # 1초마다 클릭 시뮬레이션 시작
-        self.timer.start(1000) 
-
+        self.timer.start(1000)
 
     def stop_update(self):
         self.label_4.setText("중단됨")
@@ -125,7 +104,7 @@ class MyApp(QtWidgets.QWidget, Ui_Form):
     def simulate_scroll(self):
         # 클릭 시뮬레이션
         pyautogui.scroll(10000)
-    
+
     def mousePressEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
